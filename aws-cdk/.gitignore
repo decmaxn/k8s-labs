@@ -1,0 +1,8 @@
+# CDK Context & Staging files
+.cdk.staging/
+cdk.out/
+cdk.context.json
+
+
+# Envirmental specific 
+config.json
