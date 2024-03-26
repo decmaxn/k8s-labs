@@ -15,7 +15,7 @@ class SubnetConfigurationConstructor:
             SubnetConfiguration(
                 cidr_mask=20,
                 name="Private",
-                subnet_type=SubnetType.PRIVATE
+                subnet_type=SubnetType.ISOLATED
             )
         ]
 
@@ -29,6 +29,8 @@ class VPCConstructor:
             scope=scope,
             id="vpc",
             max_azs=1,
+            # RuntimeError: If you do not want NAT gateways (natGateways=0), make sure you don't configure any PRIVATE subnets in 'subnetConfiguration' (make them PUBLIC or ISOLATED instead)
+            # nat_gateways=0,
             cidr="172.16.0.0/16",
             subnet_configuration=subnet_configurations
         )
