@@ -15,7 +15,7 @@ class SubnetConfigurationConstructor:
             SubnetConfiguration(
                 cidr_mask=20,
                 name="Private",
-                subnet_type=SubnetType.ISOLATED
+                subnet_type=SubnetType.PRIVATE
             )
         ]
 

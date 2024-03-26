@@ -8,7 +8,6 @@ function generate_private_key_file_if_not_exist() {
 
 KEY_DIR=resource/key
 PRIVATE_KEY_PATH=$KEY_DIR/id_rsa
-TOKEN_PATH=$KEY_DIR/token.txt
 
 mkdir -p $KEY_DIR
 echo "check private key existence."

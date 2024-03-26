@@ -15,3 +15,13 @@ pip 22.0.2 from /usr/lib/python3/dist-packages/pip (python 3.10)
 virtualenv 20.25.1 from /home/vma/.local/lib/python3.10/site-packages/virtualenv/__init__.py
 ```
 
+## To find latest AMI config for this lab
+This lab is based on Ubuntu AMI own by [Canonica](https://canonical-aws.readthedocs-hosted.com/en/latest/aws-how-to/instances/find-ubuntu-images/#ownership-verification) account(099720109477). Refer to [Finding images with SSM](https://canonical-aws.readthedocs-hosted.com/en/latest/aws-how-to/instances/find-ubuntu-images/#images-for-ec2-and-eks) to find latest similar AMI name (Referred as IMAGE_ID in config.json)
+
+```bash
+ID=$(aws ssm get-parameters \
+    --names    /aws/service/canonical/ubuntu/server/20.04/stable/current/amd64/hvm/ebs-gp2/ami-id \
+    --query "Parameters[].Value" \
+    --output text)
+aws ec2 describe-images --image-id $ID --query "Images[].Name" --output text
+```
