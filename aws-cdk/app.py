@@ -28,6 +28,7 @@ master_stack = MasterStackConstructor(
     config=config,
 
     vpc_stack=vpc_stack,
+    deployment_asset_stack=deployment_asset_stack,
 ).execute()
 
 app.synth()

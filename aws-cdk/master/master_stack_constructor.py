@@ -2,6 +2,8 @@ from utils.instance_constructor import PrivateInstanceConstructor
 from aws_cdk.core import Construct
 from aws_cdk.core import Stack
 from aws_cdk.core import Environment
+from deployment_asset.deployment_asset_stack_constructor import DeploymentAssetStack
+from master.user_data_constructor import MasterUserDataConstructor
 from vpc.vpc_stack_constructor import VpcStack
 
 class MasterStack(Stack):
@@ -11,7 +13,7 @@ class MasterStack(Stack):
         id: str,
         config: dict,
         vpc_stack: VpcStack,
-        # deployment_asset_stack: DeploymentAssetStack,
+        deployment_asset_stack: DeploymentAssetStack,
         # security_group: SecurityGroup,
         **kwargs
     ):
@@ -24,7 +26,12 @@ class MasterStack(Stack):
             vpc_stack=vpc_stack,
         ).execute()
 
+        master_user_data = MasterUserDataConstructor(
+            deployment_asset_stack=deployment_asset_stack, instance=self.master_instance
+        ).execute()
+        row_user_data = master_user_data.render()
 
+        self.master_instance.add_user_data(row_user_data)
 
 class MasterStackConstructor:
     def __init__(
@@ -34,12 +41,16 @@ class MasterStackConstructor:
         config: dict,
 
         vpc_stack: VpcStack,
+        deployment_asset_stack: DeploymentAssetStack,
+        # cluster_security_group_stack: ClusterSecurityGroupStack
     ):
         self.__scope = scope
         self.__env = env
         self.__config = config
 
         self.__vpc_stack = vpc_stack
+        self.__deployment_asset_stack = deployment_asset_stack
+        # self.__cluster_security_group_stack = cluster_security_group_stack
 
     def execute(self):
         return MasterStack(
@@ -50,4 +61,6 @@ class MasterStackConstructor:
             config=self.__config,
 
             vpc_stack=self.__vpc_stack,
+            deployment_asset_stack=self.__deployment_asset_stack,
+            # security_group=self.__cluster_security_group_stack.master_security_group
         )
