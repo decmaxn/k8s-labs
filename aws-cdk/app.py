@@ -29,6 +29,7 @@ master_stack = MasterStackConstructor(
 
     vpc_stack=vpc_stack,
     deployment_asset_stack=deployment_asset_stack,
+    cluster_security_group_stack=cluster_security_group_stack
 ).execute()
 
 app.synth()
