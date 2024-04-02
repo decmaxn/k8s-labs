@@ -11,6 +11,7 @@ class DeploymentAssetStack(core.Stack):
         public_key_path: str,
         private_key_path: str,
         create_user_script_path: str,
+        deploy_master_script_path: str,
         **kwargs,
     ):
         super().__init__(scope, id, **kwargs)
@@ -19,6 +20,7 @@ class DeploymentAssetStack(core.Stack):
         self.private_key_asset = self.__create_asset(id="private_key_asset", path=private_key_path)
         self.create_user_script_asset = self.__create_asset(id="create_user_script_asset", path=create_user_script_path)
 
+        self.deploy_master_script_asset = self.__create_asset(id="deploy_master_script_asset", path=deploy_master_script_path)
 
     def __create_asset(self, id: str, path: str):
         return Asset(scope=self, id=id, path=path)
@@ -39,5 +41,6 @@ class DeploymentAssetStackConstructor:
 
             private_key_path=os.path.join("resource", "key", "id_rsa"),
             public_key_path=os.path.join("resource", "key", "id_rsa.pub"),
-            create_user_script_path=os.path.join("resource", "script", "create_user.sh")
+            create_user_script_path=os.path.join("resource", "script", "create_user.sh"),
+            deploy_master_script_path=os.path.join("resource", "script", "deploy_master.sh"),
         )

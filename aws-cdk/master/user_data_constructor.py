@@ -10,13 +10,14 @@ class MasterUserDataConstructor:
         self.__user_data = UserData.for_linux()
         self.__local_asset_creator = LocalAssetCreator(user_data=self.__user_data, instance=instance)
 
+        self.__deploy_master_script_asset = deployment_asset_stack.deploy_master_script_asset
         self.__public_key_asset = deployment_asset_stack.public_key_asset
         self.__create_user_script_asset = deployment_asset_stack.create_user_script_asset
 
     def execute(self) -> UserData:
         AWSCliInstallationAttacher(self.__user_data).execute()
 
-        # local_deploy_master_script = self.__local_asset_creator.execute(self.__deploy_master_script_asset)
+        local_deploy_master_script = self.__local_asset_creator.execute(self.__deploy_master_script_asset)
         local_public_key = self.__local_asset_creator.execute(self.__public_key_asset)
         local_create_user_script = self.__local_asset_creator.execute(self.__create_user_script_asset)
 
